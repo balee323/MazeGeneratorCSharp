@@ -14,12 +14,12 @@ namespace MazeGeneratorCSharp
         Left = 3,
         Right = 4
     };
-
+    
     public partial class Form1 : Form
     {
 
-        private int size = 256; //64, 128, 256, 512
-
+        private int size = 1024; //64, 128, 256, 512
+        private int cellSize = 25;
 
         private Cell previousCell;
         private Stack<Cell> visitedCells = new Stack<Cell>();
@@ -43,14 +43,14 @@ namespace MazeGeneratorCSharp
 
             var lootCell = cells[rand.Next(0, (cells.Count/2)-1)];
             Pen purplePen = new Pen(Color.Purple, 5);
-            this.CreateGraphics().DrawEllipse(purplePen, (float)lootCell.Top.Point1.X + 5, 
-                (float)lootCell.Top.Point1.Y + 5, 30, 30);
+            this.CreateGraphics().DrawEllipse(purplePen, (float)lootCell.Top.Point1.X, 
+                (float)lootCell.Top.Point1.Y, cellSize, cellSize);
 
 
             var startCell = cells[rand.Next((cells.Count/2) + 2, cells.Count - 1)];
             Pen orangePen = new Pen(Color.Orange, 5);
-            this.CreateGraphics().DrawEllipse(orangePen, (float) startCell.Top.Point1.X + 5,
-                (float) startCell.Top.Point1.Y + 5, 30, 30);
+            this.CreateGraphics().DrawEllipse(orangePen, (float) startCell.Top.Point1.X,
+                (float) startCell.Top.Point1.Y, cellSize, cellSize);
 
             while (visitedCells.Count > 0)
             {
@@ -64,7 +64,7 @@ namespace MazeGeneratorCSharp
                 int nextCell = rand.Next(0, cells.Count - 1);
                 cell = cells[nextCell];
 
-                Thread.Sleep(50);
+                Thread.Sleep(10);
             }
         }
 
@@ -140,29 +140,29 @@ namespace MazeGeneratorCSharp
                     cell.Top =
                         new Line
                         {
-                            Point1 = new Point(i * 50, j * 50),
-                            Point2 = new Point((i * 50) + 50, j * 50)
+                            Point1 = new Point(i * cellSize, j * cellSize),
+                            Point2 = new Point((i * cellSize) + cellSize, j * cellSize)
                         };
                    
                     cell.Left =
                         new Line
                         {
-                            Point1 = new Point(i * 50, j * 50),
-                            Point2 = new Point(i * 50, (j * 50) + 50)
+                            Point1 = new Point(i * cellSize, j * cellSize),
+                            Point2 = new Point(i * cellSize, (j * cellSize) + cellSize)
                         };
                     
                     cell.Bottom =
                         new Line
                         {
-                            Point1 = new Point((i * 50), (j * 50) + 50),
-                            Point2 = new Point((i * 50) +50, (j * 50) + 50)
+                            Point1 = new Point((i * cellSize), (j * cellSize) + cellSize),
+                            Point2 = new Point((i * cellSize) +cellSize, (j * cellSize) + cellSize)
                         };
                     
                     cell.Right =
                         new Line
                         {
-                            Point1 = new Point((i * 50) + 50, j * 50),
-                            Point2 = new Point((i * 50) + 50, (j * 50) + 50)
+                            Point1 = new Point((i * cellSize) + cellSize, j * cellSize),
+                            Point2 = new Point((i * cellSize) + cellSize, (j * cellSize) + cellSize)
                         };
 
                     this.CreateGraphics().DrawLine(blackPen, cell.Top.Point1,  cell.Top.Point2);
