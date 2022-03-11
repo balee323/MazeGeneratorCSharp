@@ -18,7 +18,7 @@ namespace MazeGeneratorCSharp
     public partial class Form1 : Form
     {
 
-        private int size = 1024; //64, 128, 256, 512
+        private int size = 1500; //64, 128, 256, 512
         private int cellSize = 25;
 
         private Cell previousCell;
@@ -30,9 +30,9 @@ namespace MazeGeneratorCSharp
             InitializeComponent();
         }
 
-        private void GenerateMaze()
+        private void GenerateMaze(Graphics graphics)
         {
-            Graphics graphics = this.CreateGraphics();
+            //Graphics graphics = this.CreateGraphics();
 
   
 
@@ -41,7 +41,7 @@ namespace MazeGeneratorCSharp
 
             Random rand = new Random();
 
-            var lootCell = cells[rand.Next(0, (cells.Count/2)-1)];
+            var lootCell = cells[rand.Next(0, (cells.Count/8)-1)];
             Pen purplePen = new Pen(Color.Purple, 5);
             this.CreateGraphics().DrawEllipse(purplePen, (float)lootCell.Top.Point1.X, 
                 (float)lootCell.Top.Point1.Y, cellSize, cellSize);
@@ -66,6 +66,7 @@ namespace MazeGeneratorCSharp
 
                 Thread.Sleep(10);
             }
+
         }
 
         private void ProcessNextCell(Cell cell, Graphics graphics)
@@ -180,7 +181,9 @@ namespace MazeGeneratorCSharp
         {
             
             GenerateGridUsingLines();
-            Task.Run( () => GenerateMaze());
+            Graphics graphics = this.CreateGraphics();
+
+            Task.Run( () => GenerateMaze(graphics));
         }
 
     }
